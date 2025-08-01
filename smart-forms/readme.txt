@@ -3,7 +3,7 @@ Contributors: EDGARROJAS
 Tags: form, forms, contact form, custom form, form builder
 Requires at least: 3.3
 Tested up to: 6.7.1
-Stable tag: 2.6.98
+Stable tag: 2.6.99
 License: GPLv3 or later
 Author URI: https://smartforms.rednao.com/
 Plugin URI: https://smartforms.rednao.com/
@@ -89,6 +89,8 @@ This generally happens when your database doesn't support UTF-8 characters, so t
 
 
 == Changelog ==
+=  2.6.99 =
+* Fixed issue with survey field
 =  2.6.89 =
 * Fixed issue with style tab
 =  2.6.88 =

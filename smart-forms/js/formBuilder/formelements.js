@@ -4206,7 +4206,7 @@ sfSurveyTable.prototype.GenerateInlineElement=function()
     table+='<div class="redNaoControls"><table class="table table-striped"> <thead> <tr> <th  class="redNaoSurveyColumn"></th>';
     for(var i=0;i<this.Options.Columns.length;i++)
     {
-        table+='<th class="redNaoSurveyColumn">'+this.Options.Columns[i].label+'</th>';
+        table+='<th class="redNaoSurveyColumn">'+RedNaoEscapeHtml(this.Options.Columns[i].label)+'</th>';
     }
     table+='</tr> </thead> <tbody>';
 
