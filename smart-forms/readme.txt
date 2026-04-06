@@ -2,8 +2,8 @@
 Contributors: EDGARROJAS
 Tags: form, forms, contact form, custom form, form builder
 Requires at least: 3.3
-Tested up to: 6.7.1
-Stable tag: 2.6.99
+Tested up to: 6.9.1
+Stable tag: 2.6.101
 License: GPLv3 or later
 Author URI: https://smartforms.rednao.com/
 Plugin URI: https://smartforms.rednao.com/

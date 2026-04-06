@@ -7,139 +7,138 @@
  * To change this template use File | Settings | File Templates.
  */
 
-if(!defined('ABSPATH'))
+if (!defined('ABSPATH'))
     die('Forbidden');
 
 
 
-require_once(SMART_FORMS_DIR.'integration/smart-donations-integration-license-helper.php');
-require_once(SMART_FORMS_DIR.'filter_listeners/fixed-field-listeners.php');
-require_once(SMART_FORMS_DIR.'smart-forms-bootstrap.php');
-require_once(SMART_FORMS_DIR.'additional_fields/smart-forms-additional-fields-list.php');
+require_once(SMART_FORMS_DIR . 'integration/smart-donations-integration-license-helper.php');
+require_once(SMART_FORMS_DIR . 'filter_listeners/fixed-field-listeners.php');
+require_once(SMART_FORMS_DIR . 'smart-forms-bootstrap.php');
+require_once(SMART_FORMS_DIR . 'additional_fields/smart-forms-additional-fields-list.php');
 
 smart_forms_load_license_manager("");
 
 wp_enqueue_script('jquery');
-wp_enqueue_script('isolated-slider',SMART_FORMS_DIR_URL.'js/rednao-isolated-jq.js',array('jquery'));
-wp_enqueue_script('rednap-fuelux',SMART_FORMS_DIR_URL.'js/utilities/fuelux/wizard.js',array('isolated-slider'));
-wp_enqueue_script('velocity-async',SMART_FORMS_DIR_URL.'js/utilities/velocityAsync/velocityAsync.js',array('isolated-slider'));
+wp_enqueue_script('isolated-slider', SMART_FORMS_DIR_URL . 'js/rednao-isolated-jq.js', array('jquery'));
+wp_enqueue_script('rednap-fuelux', SMART_FORMS_DIR_URL . 'js/utilities/fuelux/wizard.js', array('isolated-slider'));
+wp_enqueue_script('velocity-async', SMART_FORMS_DIR_URL . 'js/utilities/velocityAsync/velocityAsync.js', array('isolated-slider'));
 wp_enqueue_media();
 
-$formElementDependencies=array('isolated-slider','smart-forms-form-elements-container');
-$formElementDependencies=apply_filters('smart_forms_add_form_elements_dependencies',$formElementDependencies);
+$formElementDependencies = array('isolated-slider', 'smart-forms-form-elements-container');
+$formElementDependencies = apply_filters('smart_forms_add_form_elements_dependencies', $formElementDependencies);
 
-wp_enqueue_script('smart-forms-event-slider',SMART_FORMS_DIR_URL.'js/utilities/bootstrap-slider/bootstrap-slider.min.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-promise',SMART_FORMS_DIR_URL.'js/utilities/es6-promise/dist/es6-promise.min.js',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-event-manager',SMART_FORMS_DIR_URL.'js/formBuilder/eventmanager.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-tutorials',SMART_FORMS_DIR_URL. 'js/tutorials/rnTutorials.js',array('smart-forms-form-elements','isolated-slider','smart-forms-event-manager'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-wizard-steps',SMART_FORMS_DIR_URL. 'js/utilities/popup-wizard/wizard-steps.js',array('smart-forms-form-elements','isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-tinymce',SMART_FORMS_DIR_URL. 'js/utilities/tinymce/tinymce.min.js',array('smart-forms-form-elements','isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-popup-wizard',SMART_FORMS_DIR_URL. 'js/utilities/popup-wizard/popup-wizard.js',array('smart-forms-wizard-steps'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-redirect-to-wizard-steps',SMART_FORMS_DIR_URL. 'js/wizards/redirect-to-wizard-steps.js',array('smart-forms-popup-wizard'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-paypal-to-wizard-steps',SMART_FORMS_DIR_URL. 'js/wizards/paypal-wizard-steps.js',array('smart-forms-popup-wizard'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-enable-email-steps',SMART_FORMS_DIR_URL. 'js/wizards/email-enabled-wizard-steps.js',array('smart-forms-popup-wizard'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-form-elements-container',SMART_FORMS_DIR_URL.'js/formBuilder/container/Container.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-form-elements-resizer',SMART_FORMS_DIR_URL.'js/formBuilder/container/ContainerResizer.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-form-elements-containerdes',SMART_FORMS_DIR_URL.'js/formBuilder/container/ContainerDesigner.js',array('isolated-slider','smart-forms-form-elements-resizer'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-form-elements',SMART_FORMS_DIR_URL.'js/formBuilder/formelements.js',$formElementDependencies,SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-list-manager',SMART_FORMS_DIR_URL.'js/utilities/rnListManager.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-formula-window',SMART_FORMS_DIR_URL.'js/formBuilder/formula/formulawindow.js',array('isolated-slider','smart-forms-codemirror','smart-forms-codemirror-javascript','smart-forms-codemirror-autocomplete'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-formula-custom-actions',SMART_FORMS_DIR_URL.'js/formBuilder/formula/customActions.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-formula-fixedvalues-actions',SMART_FORMS_DIR_URL.'js/formBuilder/formula/fixedValues.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-elements-manipulators',SMART_FORMS_DIR_URL.'js/formBuilder/properties/manipulators.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-formBuilder',SMART_FORMS_DIR_URL.'js/formBuilder/formbuilder.js',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-dragmanager',SMART_FORMS_DIR_URL.'js/formBuilder/dragManager/dragmanager.js',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-dragitembehaviors',SMART_FORMS_DIR_URL.'js/formBuilder/dragManager/dragitembehaviors.js',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-condition-designer',SMART_FORMS_DIR_URL.'js/conditional_manager/condition-designer.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-conditional-handlers',SMART_FORMS_DIR_URL.'js/bundle/conditionalHandlers_bundle.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-conditional-manager',SMART_FORMS_DIR_URL.'js/bundle/conditionalManager_bundle.js',array('isolated-slider','smart-forms-conditional-handlers'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('ismart-forms-add-new',SMART_FORMS_DIR_URL.'js/subscriber_interfaces/ismart-forms-add-new.js',array('smart-forms-event-manager','isolated-slider','smart-forms-tinymce','smart-forms-add-new-tutorial'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-multiple-step-base',SMART_FORMS_DIR_URL.'js/multiple_steps/multiple_steps_base.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-multiple-step-designer',SMART_FORMS_DIR_URL.'js/multiple_steps/multiple_steps_designer.js',array('smart-forms-multiple-step-base'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-codemirror',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/codemirror.js',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-codemirror-javascript',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/mode/javascript/javascript.js',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-codemirror-placeholder',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/addon/display/placeholder.js',array('smart-forms-codemirror'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-codemirror-hint',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/addon/hint/show-hint.js',array('smart-forms-codemirror'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-codemirror-autocomplete',SMART_FORMS_DIR_URL.'js/formBuilder/formula/autoComplete.js',array('smart-forms-codemirror-hint'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-eslint',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/addon/lint/eslint.min.js',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-codemirror-eslint',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/addon/lint/eslint-lint.js',array('smart-forms-eslint'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-codemirror-lint',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/addon/lint/lint.js',array('smart-forms-codemirror-javascript'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-add-new-tutorial',SMART_FORMS_DIR_URL.'js/bundle/addnewtutorial_bundle.js',array('isolated-slider','smart-forms-promise'),SMART_FORMS_FILE_VERSION);
-
-
+wp_enqueue_script('smart-forms-event-slider', SMART_FORMS_DIR_URL . 'js/utilities/bootstrap-slider/bootstrap-slider.min.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-promise', SMART_FORMS_DIR_URL . 'js/utilities/es6-promise/dist/es6-promise.min.js', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-event-manager', SMART_FORMS_DIR_URL . 'js/formBuilder/eventmanager.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-tutorials', SMART_FORMS_DIR_URL . 'js/tutorials/rnTutorials.js', array('smart-forms-form-elements', 'isolated-slider', 'smart-forms-event-manager'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-wizard-steps', SMART_FORMS_DIR_URL . 'js/utilities/popup-wizard/wizard-steps.js', array('smart-forms-form-elements', 'isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-tinymce', SMART_FORMS_DIR_URL . 'js/utilities/tinymce/tinymce.min.js', array('smart-forms-form-elements', 'isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-popup-wizard', SMART_FORMS_DIR_URL . 'js/utilities/popup-wizard/popup-wizard.js', array('smart-forms-wizard-steps'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-redirect-to-wizard-steps', SMART_FORMS_DIR_URL . 'js/wizards/redirect-to-wizard-steps.js', array('smart-forms-popup-wizard'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-paypal-to-wizard-steps', SMART_FORMS_DIR_URL . 'js/wizards/paypal-wizard-steps.js', array('smart-forms-popup-wizard'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-enable-email-steps', SMART_FORMS_DIR_URL . 'js/wizards/email-enabled-wizard-steps.js', array('smart-forms-popup-wizard'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-form-elements-container', SMART_FORMS_DIR_URL . 'js/formBuilder/container/Container.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-form-elements-resizer', SMART_FORMS_DIR_URL . 'js/formBuilder/container/ContainerResizer.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-form-elements-containerdes', SMART_FORMS_DIR_URL . 'js/formBuilder/container/ContainerDesigner.js', array('isolated-slider', 'smart-forms-form-elements-resizer'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-form-elements', SMART_FORMS_DIR_URL . 'js/formBuilder/formelements.js', $formElementDependencies, SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-list-manager', SMART_FORMS_DIR_URL . 'js/utilities/rnListManager.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-formula-window', SMART_FORMS_DIR_URL . 'js/formBuilder/formula/formulawindow.js', array('isolated-slider', 'smart-forms-codemirror', 'smart-forms-codemirror-javascript', 'smart-forms-codemirror-autocomplete'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-formula-custom-actions', SMART_FORMS_DIR_URL . 'js/formBuilder/formula/customActions.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-formula-fixedvalues-actions', SMART_FORMS_DIR_URL . 'js/formBuilder/formula/fixedValues.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-elements-manipulators', SMART_FORMS_DIR_URL . 'js/formBuilder/properties/manipulators.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-formBuilder', SMART_FORMS_DIR_URL . 'js/formBuilder/formbuilder.js', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-dragmanager', SMART_FORMS_DIR_URL . 'js/formBuilder/dragManager/dragmanager.js', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-dragitembehaviors', SMART_FORMS_DIR_URL . 'js/formBuilder/dragManager/dragitembehaviors.js', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-condition-designer', SMART_FORMS_DIR_URL . 'js/conditional_manager/condition-designer.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-conditional-handlers', SMART_FORMS_DIR_URL . 'js/bundle/conditionalHandlers_bundle.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-conditional-manager', SMART_FORMS_DIR_URL . 'js/bundle/conditionalManager_bundle.js', array('isolated-slider', 'smart-forms-conditional-handlers'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('ismart-forms-add-new', SMART_FORMS_DIR_URL . 'js/subscriber_interfaces/ismart-forms-add-new.js', array('smart-forms-event-manager', 'isolated-slider', 'smart-forms-tinymce', 'smart-forms-add-new-tutorial'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-multiple-step-base', SMART_FORMS_DIR_URL . 'js/multiple_steps/multiple_steps_base.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-multiple-step-designer', SMART_FORMS_DIR_URL . 'js/multiple_steps/multiple_steps_designer.js', array('smart-forms-multiple-step-base'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-codemirror', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/codemirror.js', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-codemirror-javascript', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/mode/javascript/javascript.js', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-codemirror-placeholder', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/addon/display/placeholder.js', array('smart-forms-codemirror'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-codemirror-hint', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/addon/hint/show-hint.js', array('smart-forms-codemirror'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-codemirror-autocomplete', SMART_FORMS_DIR_URL . 'js/formBuilder/formula/autoComplete.js', array('smart-forms-codemirror-hint'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-eslint', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/addon/lint/eslint.min.js', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-codemirror-eslint', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/addon/lint/eslint-lint.js', array('smart-forms-eslint'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-codemirror-lint', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/addon/lint/lint.js', array('smart-forms-codemirror-javascript'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-add-new-tutorial', SMART_FORMS_DIR_URL . 'js/bundle/addnewtutorial_bundle.js', array('isolated-slider', 'smart-forms-promise'), SMART_FORMS_FILE_VERSION);
 
 
 
-$additionalJS=apply_filters("sf_form_configuration_on_load_js",array());
-$addNewDependencies= array('smart-forms-react-dom','smart-forms-react-core', 'smart-forms-add-new-tutorial','smart-forms-list-manager','ismart-forms-add-new','isolated-slider','smart-forms-formula-window','smart-forms-formBuilder','smart-forms-select2','smart-forms-event-manager','smart-forms-conditional-manager','smart-forms-systemjs-main-config');
-for($i=0;$i<count($additionalJS);$i++){
 
-    if(!isset($additionalJS[$i]['dependencies']))
-        $additionalJS[$i]['dependencies']=array('ismart-forms-add-new','smart-forms-systemjs-main-config','smart-forms-event-manager');
-	wp_enqueue_script($additionalJS[$i]["handler"],$additionalJS[$i]["path"],$additionalJS[$i]['dependencies']);
-	array_push($addNewDependencies,$additionalJS[$i]["handler"]);
+
+$additionalJS = apply_filters("sf_form_configuration_on_load_js", array());
+$addNewDependencies = array('smart-forms-react-dom', 'smart-forms-react-core', 'smart-forms-add-new-tutorial', 'smart-forms-list-manager', 'ismart-forms-add-new', 'isolated-slider', 'smart-forms-formula-window', 'smart-forms-formBuilder', 'smart-forms-select2', 'smart-forms-event-manager', 'smart-forms-conditional-manager', 'smart-forms-systemjs-main-config');
+for ($i = 0; $i < count($additionalJS); $i++) {
+
+    if (!isset($additionalJS[$i]['dependencies']))
+        $additionalJS[$i]['dependencies'] = array('ismart-forms-add-new', 'smart-forms-systemjs-main-config', 'smart-forms-event-manager');
+    wp_enqueue_script($additionalJS[$i]["handler"], $additionalJS[$i]["path"], $additionalJS[$i]['dependencies']);
+    array_push($addNewDependencies, $additionalJS[$i]["handler"]);
 }
 
-wp_enqueue_script('smart-forms-react-core',SMART_FORMS_DIR_URL.'js/utilities/react/react.js');
-wp_enqueue_script('smart-forms-react-dom',SMART_FORMS_DIR_URL.'js/utilities/react/react-dom.js');
+wp_enqueue_script('smart-forms-react-core', SMART_FORMS_DIR_URL . 'js/utilities/react/react.js');
+wp_enqueue_script('smart-forms-react-dom', SMART_FORMS_DIR_URL . 'js/utilities/react/react-dom.js');
 
 //p_enqueue_script('smart-forms-react',SMART_FORMS_DIR_URL.'js/dist/AddNew_bundle.js',array('isolated-slider','smart-forms-react-dom','smart-forms-react-core'),SMART_FORMS_FILE_VERSION);
 
 
 
 
-wp_enqueue_script('smart-forms-select2',SMART_FORMS_DIR_URL.'js/utilities/select2/select2.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-spectrum',SMART_FORMS_DIR_URL.'js/utilities/spectrum/spectrum.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-select2', SMART_FORMS_DIR_URL . 'js/utilities/select2/select2.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-spectrum', SMART_FORMS_DIR_URL . 'js/utilities/spectrum/spectrum.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
 
 
 
 
-require_once(SMART_FORMS_DIR.'translations/form-elements-translation.php');
+require_once(SMART_FORMS_DIR . 'translations/form-elements-translation.php');
 
 
 echo "<div class='bootstrap-wrapper' style='position: absolute;width:100%;'><div id='smart-forms-notification'></div></div>";
 
-echo "<h1>".__("Forms")."</h1>";
+echo "<h1>" . __("Forms") . "</h1>";
 
-$fieldsDependencies=array();
-$additionalFields=apply_filters('smart_forms_af_names',$fieldsDependencies);
-foreach($additionalFields as $field)
-{
-    do_action('smart_forms_af_'.$field['id']);
+$fieldsDependencies = array();
+$additionalFields = apply_filters('smart_forms_af_names', $fieldsDependencies);
+foreach ($additionalFields as $field) {
+    do_action('smart_forms_af_' . $field['id']);
 }
 
 
 
-wp_enqueue_script('smart-forms-style-elements',SMART_FORMS_DIR_URL.'js/editors/style_editor/element-styler.js',array('isolated-slider','smart-forms-styler-set','smart-forms-style-properties'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-style-editor',SMART_FORMS_DIR_URL.'js/editors/style_editor/style-editor.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-style-properties',SMART_FORMS_DIR_URL.'js/editors/style_editor/style-properties.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('smart-forms-styler-set',SMART_FORMS_DIR_URL.'js/editors/style_editor/styler-set.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_script('bootstrap-materialjs',SMART_FORMS_DIR_URL.'js/bootstrap/material.min.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-style-elements', SMART_FORMS_DIR_URL . 'js/editors/style_editor/element-styler.js', array('isolated-slider', 'smart-forms-styler-set', 'smart-forms-style-properties'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-style-editor', SMART_FORMS_DIR_URL . 'js/editors/style_editor/style-editor.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-style-properties', SMART_FORMS_DIR_URL . 'js/editors/style_editor/style-properties.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-styler-set', SMART_FORMS_DIR_URL . 'js/editors/style_editor/styler-set.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('bootstrap-materialjs', SMART_FORMS_DIR_URL . 'js/bootstrap/material.min.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
 
 wp_enqueue_script('json2');
 
 
-wp_enqueue_script('smart-forms-formula',SMART_FORMS_DIR_URL.'js/formBuilder/formula/formula.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('smart-forms-slider',SMART_FORMS_DIR_URL.'js/utilities/bootstrap-slider/bootstrap-slider.min.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('smart-forms-main-style',SMART_FORMS_DIR_URL.'css/mainStyle.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('smart-forms-main-spectrum',SMART_FORMS_DIR_URL.'js/utilities/spectrum/spectrum.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('smart-forms-Slider',SMART_FORMS_DIR_URL.'css/smartFormsSlider/jquery-ui-1.10.2.custom.min.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('form-builder-boot-strap',SMART_FORMS_DIR_URL.'css/formBuilder/bootstrap.min.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('form-builder-custom',SMART_FORMS_DIR_URL.'css/formBuilder/custom.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('form-builder-select2',SMART_FORMS_DIR_URL.'js/utilities/select2/select2.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('form-builder-fuelux',SMART_FORMS_DIR_URL.'js/utilities/fuelux/fuelux.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('smart-form-codemirror-style',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/codemirror.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('smart-form-codemirror-showhint',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/addon/hint/show-hint.css',array(),SMART_FORMS_FILE_VERSION);
-wp_enqueue_style('smart-form-codemirror-lint-style',SMART_FORMS_DIR_URL.'js/utilities/codeMirror/addon/lint/lint.css',array(),SMART_FORMS_FILE_VERSION);
+wp_enqueue_script('smart-forms-formula', SMART_FORMS_DIR_URL . 'js/formBuilder/formula/formula.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('smart-forms-slider', SMART_FORMS_DIR_URL . 'js/utilities/bootstrap-slider/bootstrap-slider.min.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('smart-forms-main-style', SMART_FORMS_DIR_URL . 'css/mainStyle.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('smart-forms-main-spectrum', SMART_FORMS_DIR_URL . 'js/utilities/spectrum/spectrum.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('smart-forms-Slider', SMART_FORMS_DIR_URL . 'css/smartFormsSlider/jquery-ui-1.10.2.custom.min.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('form-builder-boot-strap', SMART_FORMS_DIR_URL . 'css/formBuilder/bootstrap.min.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('form-builder-custom', SMART_FORMS_DIR_URL . 'css/formBuilder/custom.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('form-builder-select2', SMART_FORMS_DIR_URL . 'js/utilities/select2/select2.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('form-builder-fuelux', SMART_FORMS_DIR_URL . 'js/utilities/fuelux/fuelux.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('smart-form-codemirror-style', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/codemirror.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('smart-form-codemirror-showhint', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/addon/hint/show-hint.css', array(), SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('smart-form-codemirror-lint-style', SMART_FORMS_DIR_URL . 'js/utilities/codeMirror/addon/lint/lint.css', array(), SMART_FORMS_FILE_VERSION);
 
 
 
-wp_enqueue_style('bootstrap-material',SMART_FORMS_DIR_URL.'css/bootstrap/bootstrap-material-scoped.css',array(),SMART_FORMS_FILE_VERSION);
+wp_enqueue_style('bootstrap-material', SMART_FORMS_DIR_URL . 'css/bootstrap/bootstrap-material-scoped.css', array(), SMART_FORMS_FILE_VERSION);
 do_action('smart_formsa_include_systemjs');
-if(get_option("SMART_FORMS_REQUIRE_DB_DETAIL_GENERATION")=='y')
-	wp_enqueue_script('smart-forms-detail-generator',SMART_FORMS_DIR_URL.'utilities/smart-forms-detail-generator.js',array('isolated-slider'),SMART_FORMS_FILE_VERSION);
+if (get_option("SMART_FORMS_REQUIRE_DB_DETAIL_GENERATION") == 'y')
+    wp_enqueue_script('smart-forms-detail-generator', SMART_FORMS_DIR_URL . 'utilities/smart-forms-detail-generator.js', array('isolated-slider'), SMART_FORMS_FILE_VERSION);
 
-$GDPR=get_option('SmartFormsEnableGDPR','n');
+$GDPR = get_option('SmartFormsEnableGDPR', 'n');
 
 do_action('smart_forms_load_designer_scripts');
 
@@ -150,45 +149,44 @@ do_action('smart_forms_load_designer_scripts');
 <script type="text/javascript">
     var smartFormsDesignMode=true;
     var saveNonce=<?php echo json_encode(wp_create_nonce('save_nonce')); ?>;
-    var SmartFormsEnableGDPR=<?php echo json_encode($GDPR)?>;
-    var smartFormsShowTutorial=<?php echo json_encode(get_option('smart_forms_show_tutorial'))?>;
+    var SmartFormsEnableGDPR=<?php echo json_encode($GDPR) ?>;
+    var smartFormsShowTutorial=<?php echo json_encode(get_option('smart_forms_show_tutorial')) ?>;
     var rntinyMCEPreInit={
         baseURL: smartFormsRootPath+'js/utilities/tinymce',
         suffix: ".min"
     };
-	<?php
+    <?php
 
-	$emailFixedFieldListeners=array();
-	$emailFixedFieldListeners=apply_filters('smart-forms-get-email-fixed-field-listener',$emailFixedFieldListeners);
-    echo "var smartFormsAdditionalFields0=".json_encode($additionalFields).";";
-	echo "var smartFormsFixedFields=".json_encode($emailFixedFieldListeners).";";
-	 ?>
+    $emailFixedFieldListeners = array();
+    $emailFixedFieldListeners = apply_filters('smart-forms-get-email-fixed-field-listener', $emailFixedFieldListeners);
+    echo "var smartFormsAdditionalFields0=" . json_encode($additionalFields) . ";";
+    echo "var smartFormsFixedFields=" . json_encode($emailFixedFieldListeners) . ";";
+    ?>
 
-    var smartFormsPreviewUrl=<?php echo json_encode(trim(site_url()).'?smartformspreview=1')?>;
-    var smartForms_arrow_closed=<?php echo json_encode(SMART_FORMS_DIR_URL.'images/arrow_right.png')?>;
-    var smartForms_arrow_open=<?php echo json_encode(SMART_FORMS_DIR_URL.'images/arrow_down.png')?>;
-    var smartFormsPath=<?php echo json_encode(SMART_FORMS_DIR_URL)?>;
-    var smartFormsRootPath=<?php echo json_encode(SMART_FORMS_DIR_URL)?>;
-    var smartFormsEmailDoctorUrl=<?php echo json_encode(strval(menu_page_url('smart_forms_menu',false)))?>;
+    var smartFormsPreviewUrl=<?php echo json_encode(trim(site_url()) . '?smartformspreview=1') ?>;
+    var smartForms_arrow_closed=<?php echo json_encode(SMART_FORMS_DIR_URL . 'images/arrow_right.png') ?>;
+    var smartForms_arrow_open=<?php echo json_encode(SMART_FORMS_DIR_URL . 'images/arrow_down.png') ?>;
+    var smartFormsPath=<?php echo json_encode(SMART_FORMS_DIR_URL) ?>;
+    var smartFormsRootPath=<?php echo json_encode(SMART_FORMS_DIR_URL) ?>;
+    var smartFormsEmailDoctorUrl=<?php echo json_encode(strval(menu_page_url('smart_forms_menu', false))) ?>;
 
     <?php
 
-        $customVars=array();
-        $customVars=apply_filters('smart-forms-add-new-js-vars',$customVars);
+    $customVars = array();
+    $customVars = apply_filters('smart-forms-add-new-js-vars', $customVars);
 
-        foreach($customVars as $var)
-        {
-            $value=json_decode($var["value"]);
-            if($value==false)
-                continue;
-
-
-            echo "var ".esc_js($var["name"])." = ".json_encode($value).'; ';
-        }
+    foreach ($customVars as $var) {
+        $value = json_decode($var["value"]);
+        if ($value == false)
+            continue;
 
 
+        echo "var " . esc_js($var["name"]) . " = " . json_encode($value) . '; ';
+    }
 
-     ?>
+
+
+    ?>
 
 
 </script>
@@ -202,7 +200,7 @@ do_action('smart_forms_load_designer_scripts');
 <div style="position:fixed;top:0;left:0;overflow: auto;z-index: 999999;width:100%;height:100%;background-color: #efefef;" id="sfMainContainer">
     <div id="loadingScreen" style="background-color: white;width: 100%;height: 100%;top:0;left:0;z-index: 100000; position: absolute;text-align: center;">
         <div style="top:200px;position: absolute;width: 100%;text-align: center;" id="smartFormsLoadingLogo">
-            <img  src="<?php echo esc_attr(SMART_FORMS_DIR_URL)?>images/ProgressBar2.gif" height="211;" alt="" />
+            <img  src="<?php echo esc_attr(SMART_FORMS_DIR_URL) ?>images/ProgressBar2.gif" height="211;" alt="" />
             <label  style="font-size: 31px; line-height: 31px; font-family:Verdana, Geneva, sans-serif;padding:0;margin:0; display: block;">Loading important stuff, please wait a bit =)</label>
         </div>
 
@@ -276,7 +274,7 @@ do_action('smart_forms_load_designer_scripts');
                         <h4 style="margin:0 0 0 15px;display:inline-block">Editing: </h4>
                         <input id="smartFormName" style="width:400px;cursor: pointer;background-color:transparent;flex-grow: 1;" value="New Form"/>
                     </div>
-                    <span onclick="location.href='<?php echo esc_url(admin_url())?>?page=smart_forms_menu'" id="ExitButton" title="Exit" class="fa fa-times" style="font-size: 30px;float: right;"></span>
+                    <span onclick="location.href='<?php echo esc_url(admin_url()) ?>?page=smart_forms_menu'" id="ExitButton" title="Exit" class="fa fa-times" style="font-size: 30px;float: right;"></span>
                 </div>
             </div>
             <div class="nav-tab-wrapper" id="smartFormsTopTab" style="display: flex;">
@@ -289,30 +287,32 @@ do_action('smart_forms_load_designer_scripts');
 
 
                 <?php
-                    $tabs=array();
-                    $tabs=apply_filters("sf_form_configuration_on_load_tabs",$tabs);
-                    if($tabs==null)
-                        $tabs=array();
-                    for($i=0;$i<count($tabs);$i++)
-                    {
-                        echo '<a id="smartFormsCustom'.esc_attr($i).'Tab" data-tab-id="'.esc_attr($tabs[$i]["id"]).'" class="nav-tab sfcustomtab" onclick="SmartFormsAddNewVar.GoToCustomTab('.intval($i).');" >'.esc_html($tabs[$i]["name"]).'</a>';
-                    }
+                $tabs = array();
+                $tabs = apply_filters("sf_form_configuration_on_load_tabs", $tabs);
+                if ($tabs == null)
+                    $tabs = array();
+                for ($i = 0; $i < count($tabs); $i++) {
+                    echo '<a id="smartFormsCustom' . esc_attr($i) . 'Tab" data-tab-id="' . esc_attr($tabs[$i]["id"]) . '" class="nav-tab sfcustomtab" onclick="SmartFormsAddNewVar.GoToCustomTab(' . intval($i) . ');" >' . esc_html($tabs[$i]["name"]) . '</a>';
+                }
                 ?>
 
                 <?php
-                    if(has_smart_donations_license_and_is_active())
-                    {
-                        $addNewDependencies[]='smart-forms-donation-elements';
-                        wp_enqueue_script('smart-forms-donation-elements',SMART_FORMS_DIR_URL.'js/integration/smart-donations-integration.js',array('smart-forms-form-elements'),SMART_FORMS_FILE_VERSION);
-                        ?>
-                        <a class='nav-tab' id="smartDonationsTab" onclick="SmartFormsAddNewVar.GoToSmartDonations();"><?php echo __("Smart Donations") ?></a>
+                if (has_smart_donations_license_and_is_active()) {
+                    $addNewDependencies[] = 'smart-forms-donation-elements';
+                    wp_enqueue_script('smart-forms-donation-elements', SMART_FORMS_DIR_URL . 'js/integration/smart-donations-integration.js', array('smart-forms-form-elements'), SMART_FORMS_FILE_VERSION);
+                    wp_localize_script('smart-forms-donation-elements','smartDonationsData',array(
+                        'nonce'=>wp_create_nonce('rednao_smart_forms_nonce')
+                    ));
+
+                    ?>
+                            <a class='nav-tab' id="smartDonationsTab" onclick="SmartFormsAddNewVar.GoToSmartDonations();"><?php echo __("Smart Donations") ?></a>
+                        <?php
+                }
+                if ($GDPR == 'y') {
+                    ?>
+                            <a class='nav-tab' id="gdprTab" onclick="SmartFormsAddNewVar.GoToGDPR();">GDPR</a>
                     <?php
-                    }
-                    if($GDPR=='y'){
-                        ?>
-                        <a class='nav-tab' id="gdprTab" onclick="SmartFormsAddNewVar.GoToGDPR();">GDPR</a>
-                <?php
-                    }
+                }
                 ?>
                 </div>
 
@@ -376,7 +376,7 @@ do_action('smart_forms_load_designer_scripts');
                 <button onclick="SmartFormsAddNewVar.SendTestEmail();"><?php echo __("Send Test Email") ?></button>
             </div>
         </div>-->
-        <div id="redNaoStyleEditor" title="<?php echo __("Style Editor")?>" style="display: none;margin:0;padding:0;">
+        <div id="redNaoStyleEditor" title="<?php echo __("Style Editor") ?>" style="display: none;margin:0;padding:0;">
             <table style="width: 100%;height: 100%;">
 
                 <tr>
@@ -443,417 +443,417 @@ do_action('smart_forms_load_designer_scripts');
         </div>
 
         <?php
-            for($i=0; $i<count($tabs);$i++)
-            {
-                echo "<div style='display:none;height: 100%;background-color:#6b6b6b;' class='smartFormsCustomTab'  id='smartFormsCustom".$i."Div'><div style='width:100%;padding:10px;background-color: white;'>";                 echo wp_kses($tabs[$i]["content"],array(
-                        'style'=>array(
-                          'type'=>true
-                        ),
-                        'option'=>array(
-                            'value'=>true,
-                            'name'=>true,
-                            'class'=>true,
-                            'style'=>true,
-                            'type'=>true,
-                            'id'=>true
-                        ),
-                        'select'=>array(
-                            'name'=>true,
-                            'class'=>true,
-                            'style'=>true,
-                            'type'=>true,
-                            'id'=>true,
-                            'value'=>true
-                        ),
-                        'input'=>array(
-                           'name'=>true,
-                           'class'=>true,
-                          'style'=>true,
-                          'type'=>true,
-                          'id'=>true,
-                           'value'=>true
-                        ),
-                        'address'    => array(),
-                        'a'          => array(
-                            'class'=>true,
-                            'id'=>true,
-                            'style'=>true,
-                            'href'     => true,
-                            'rel'      => true,
-                            'rev'      => true,
-                            'name'     => true,
-                            'target'   => true,
-                            'download' => array(
-                                'valueless' => 'y',
-                            ),
-                        ),
-                        'abbr'       => array(),
-                        'acronym'    => array(),
-                        'area'       => array(
-                            'alt'    => true,
-                            'coords' => true,
-                            'href'   => true,
-                            'nohref' => true,
-                            'shape'  => true,
-                            'target' => true,
-                        ),
-                        'article'    => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'aside'      => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'audio'      => array(
-                            'autoplay' => true,
-                            'controls' => true,
-                            'loop'     => true,
-                            'muted'    => true,
-                            'preload'  => true,
-                            'src'      => true,
-                        ),
-                        'b'          => array(),
-                        'bdo'        => array(
-                            'dir' => true,
-                        ),
-                        'big'        => array(),
-                        'blockquote' => array(
-                            'cite'     => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'br'         => array(),
-                        'button'     => array(
-                            'class'=>true,
-                            'id'=>true,
-                            'style'=>true,
-                            'disabled' => true,
-                            'name'     => true,
-                            'type'     => true,
-                            'value'    => true,
-                        ),
-                        'caption'    => array(
-                            'align' => true,
-                        ),
-                        'cite'       => array(
-                            'dir'  => true,
-                            'lang' => true,
-                        ),
-                        'code'       => array(),
-                        'col'        => array(
-                            'align'   => true,
-                            'char'    => true,
-                            'charoff' => true,
-                            'span'    => true,
-                            'dir'     => true,
-                            'valign'  => true,
-                            'width'   => true,
-                        ),
-                        'colgroup'   => array(
-                            'align'   => true,
-                            'char'    => true,
-                            'charoff' => true,
-                            'span'    => true,
-                            'valign'  => true,
-                            'width'   => true,
-                        ),
-                        'del'        => array(
-                            'datetime' => true,
-                        ),
-                        'dd'         => array(),
-                        'dfn'        => array(),
-                        'details'    => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'open'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'div'        => array(
-                            'class'=>true,
-                            'id'=>true,
-                            'style'=>true,
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'dl'         => array(),
-                        'dt'         => array(),
-                        'em'         => array(),
-                        'fieldset'   => array(),
-                        'figure'     => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'figcaption' => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'font'       => array(
-                            'color' => true,
-                            'face'  => true,
-                            'size'  => true,
-                        ),
-                        'footer'     => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'h1'         => array(
-                            'align' => true,
-                        ),
-                        'h2'         => array(
-                            'align' => true,
-                        ),
-                        'h3'         => array(
-                            'align' => true,
-                        ),
-                        'h4'         => array(
-                            'align' => true,
-                        ),
-                        'h5'         => array(
-                            'align' => true,
-                        ),
-                        'h6'         => array(
-                            'align' => true,
-                        ),
-                        'header'     => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'hgroup'     => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'hr'         => array(
-                            'align'   => true,
-                            'noshade' => true,
-                            'size'    => true,
-                            'width'   => true,
-                        ),
-                        'i'          => array(),
-                        'img'        => array(
-                            'alt'      => true,
-                            'align'    => true,
-                            'border'   => true,
-                            'height'   => true,
-                            'hspace'   => true,
-                            'loading'  => true,
-                            'longdesc' => true,
-                            'vspace'   => true,
-                            'src'      => true,
-                            'usemap'   => true,
-                            'width'    => true,
-                        ),
-                        'ins'        => array(
-                            'datetime' => true,
-                            'cite'     => true,
-                        ),
-                        'kbd'        => array(),
-                        'label'      => array(
-                                'id'=>true,
-                            'style'=>true,
-                            'class'=>true,
-                            'for' => true,
-                        ),
-                        'legend'     => array(
-                            'align' => true,
-                        ),
-                        'li'         => array(
-                            'align' => true,
-                            'value' => true,
-                        ),
-                        'main'       => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'map'        => array(
-                            'name' => true,
-                        ),
-                        'mark'       => array(),
-                        'menu'       => array(
-                            'type' => true,
-                        ),
-                        'nav'        => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'object'     => array(
-                            'data' => array(
-                                'required'       => true,
-                                'value_callback' => '_wp_kses_allow_pdf_objects',
-                            ),
-                            'type' => array(
-                                'required' => true,
-                                'values'   => array( 'application/pdf' ),
-                            ),
-                        ),
-                        'p'          => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'pre'        => array(
-                            'width' => true,
-                        ),
-                        'q'          => array(
-                            'cite' => true,
-                        ),
-                        's'          => array(),
-                        'samp'       => array(),
-                        'span'       => array(
-                            'dir'      => true,
-                            'align'    => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'section'    => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'small'      => array(),
-                        'strike'     => array(),
-                        'strong'     => array(),
-                        'sub'        => array(),
-                        'summary'    => array(
-                            'align'    => true,
-                            'dir'      => true,
-                            'lang'     => true,
-                            'xml:lang' => true,
-                        ),
-                        'sup'        => array(),
-                        'table'      => array(
-                            'align'       => true,
-                            'bgcolor'     => true,
-                            'border'      => true,
-                            'cellpadding' => true,
-                            'cellspacing' => true,
-                            'dir'         => true,
-                            'rules'       => true,
-                            'summary'     => true,
-                            'width'       => true,
-                        ),
-                        'tbody'      => array(
-                            'align'   => true,
-                            'char'    => true,
-                            'charoff' => true,
-                            'valign'  => true,
-                        ),
-                        'td'         => array(
-                            'abbr'    => true,
-                            'align'   => true,
-                            'axis'    => true,
-                            'bgcolor' => true,
-                            'char'    => true,
-                            'charoff' => true,
-                            'colspan' => true,
-                            'dir'     => true,
-                            'headers' => true,
-                            'height'  => true,
-                            'nowrap'  => true,
-                            'rowspan' => true,
-                            'scope'   => true,
-                            'valign'  => true,
-                            'width'   => true,
-                        ),
-                        'textarea'   => array(
-                            'cols'     => true,
-                            'rows'     => true,
-                            'disabled' => true,
-                            'name'     => true,
-                            'readonly' => true,
-                        ),
-                        'tfoot'      => array(
-                            'align'   => true,
-                            'char'    => true,
-                            'charoff' => true,
-                            'valign'  => true,
-                        ),
-                        'th'         => array(
-                            'abbr'    => true,
-                            'align'   => true,
-                            'axis'    => true,
-                            'bgcolor' => true,
-                            'char'    => true,
-                            'charoff' => true,
-                            'colspan' => true,
-                            'headers' => true,
-                            'height'  => true,
-                            'nowrap'  => true,
-                            'rowspan' => true,
-                            'scope'   => true,
-                            'valign'  => true,
-                            'width'   => true,
-                        ),
-                        'thead'      => array(
-                            'align'   => true,
-                            'char'    => true,
-                            'charoff' => true,
-                            'valign'  => true,
-                        ),
-                        'title'      => array(),
-                        'tr'         => array(
-                            'align'   => true,
-                            'bgcolor' => true,
-                            'char'    => true,
-                            'charoff' => true,
-                            'valign'  => true,
-                        ),
-                        'track'      => array(
-                            'default' => true,
-                            'kind'    => true,
-                            'label'   => true,
-                            'src'     => true,
-                            'srclang' => true,
-                        ),
-                        'tt'         => array(),
-                        'u'          => array(),
-                        'ul'         => array(
-                            'type' => true,
-                        ),
-                        'ol'         => array(
-                            'start'    => true,
-                            'type'     => true,
-                            'reversed' => true,
-                        ),
-                        'var'        => array(),
-                        'video'      => array(
-                            'autoplay'    => true,
-                            'controls'    => true,
-                            'height'      => true,
-                            'loop'        => true,
-                            'muted'       => true,
-                            'playsinline' => true,
-                            'poster'      => true,
-                            'preload'     => true,
-                            'src'         => true,
-                            'width'       => true,
-                        ),
-                    ));
-                echo "</div></div>";
-            }
+        for ($i = 0; $i < count($tabs); $i++) {
+            echo "<div style='display:none;height: 100%;background-color:#6b6b6b;' class='smartFormsCustomTab'  id='smartFormsCustom" . $i . "Div'><div style='width:100%;padding:10px;background-color: white;'>";
+            echo wp_kses($tabs[$i]["content"], array(
+                'style' => array(
+                    'type' => true
+                ),
+                'option' => array(
+                    'value' => true,
+                    'name' => true,
+                    'class' => true,
+                    'style' => true,
+                    'type' => true,
+                    'id' => true
+                ),
+                'select' => array(
+                    'name' => true,
+                    'class' => true,
+                    'style' => true,
+                    'type' => true,
+                    'id' => true,
+                    'value' => true
+                ),
+                'input' => array(
+                    'name' => true,
+                    'class' => true,
+                    'style' => true,
+                    'type' => true,
+                    'id' => true,
+                    'value' => true
+                ),
+                'address' => array(),
+                'a' => array(
+                    'class' => true,
+                    'id' => true,
+                    'style' => true,
+                    'href' => true,
+                    'rel' => true,
+                    'rev' => true,
+                    'name' => true,
+                    'target' => true,
+                    'download' => array(
+                        'valueless' => 'y',
+                    ),
+                ),
+                'abbr' => array(),
+                'acronym' => array(),
+                'area' => array(
+                    'alt' => true,
+                    'coords' => true,
+                    'href' => true,
+                    'nohref' => true,
+                    'shape' => true,
+                    'target' => true,
+                ),
+                'article' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'aside' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'audio' => array(
+                    'autoplay' => true,
+                    'controls' => true,
+                    'loop' => true,
+                    'muted' => true,
+                    'preload' => true,
+                    'src' => true,
+                ),
+                'b' => array(),
+                'bdo' => array(
+                    'dir' => true,
+                ),
+                'big' => array(),
+                'blockquote' => array(
+                    'cite' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'br' => array(),
+                'button' => array(
+                    'class' => true,
+                    'id' => true,
+                    'style' => true,
+                    'disabled' => true,
+                    'name' => true,
+                    'type' => true,
+                    'value' => true,
+                ),
+                'caption' => array(
+                    'align' => true,
+                ),
+                'cite' => array(
+                    'dir' => true,
+                    'lang' => true,
+                ),
+                'code' => array(),
+                'col' => array(
+                    'align' => true,
+                    'char' => true,
+                    'charoff' => true,
+                    'span' => true,
+                    'dir' => true,
+                    'valign' => true,
+                    'width' => true,
+                ),
+                'colgroup' => array(
+                    'align' => true,
+                    'char' => true,
+                    'charoff' => true,
+                    'span' => true,
+                    'valign' => true,
+                    'width' => true,
+                ),
+                'del' => array(
+                    'datetime' => true,
+                ),
+                'dd' => array(),
+                'dfn' => array(),
+                'details' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'open' => true,
+                    'xml:lang' => true,
+                ),
+                'div' => array(
+                    'class' => true,
+                    'id' => true,
+                    'style' => true,
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'dl' => array(),
+                'dt' => array(),
+                'em' => array(),
+                'fieldset' => array(),
+                'figure' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'figcaption' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'font' => array(
+                    'color' => true,
+                    'face' => true,
+                    'size' => true,
+                ),
+                'footer' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'h1' => array(
+                    'align' => true,
+                ),
+                'h2' => array(
+                    'align' => true,
+                ),
+                'h3' => array(
+                    'align' => true,
+                ),
+                'h4' => array(
+                    'align' => true,
+                ),
+                'h5' => array(
+                    'align' => true,
+                ),
+                'h6' => array(
+                    'align' => true,
+                ),
+                'header' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'hgroup' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'hr' => array(
+                    'align' => true,
+                    'noshade' => true,
+                    'size' => true,
+                    'width' => true,
+                ),
+                'i' => array(),
+                'img' => array(
+                    'alt' => true,
+                    'align' => true,
+                    'border' => true,
+                    'height' => true,
+                    'hspace' => true,
+                    'loading' => true,
+                    'longdesc' => true,
+                    'vspace' => true,
+                    'src' => true,
+                    'usemap' => true,
+                    'width' => true,
+                ),
+                'ins' => array(
+                    'datetime' => true,
+                    'cite' => true,
+                ),
+                'kbd' => array(),
+                'label' => array(
+                    'id' => true,
+                    'style' => true,
+                    'class' => true,
+                    'for' => true,
+                ),
+                'legend' => array(
+                    'align' => true,
+                ),
+                'li' => array(
+                    'align' => true,
+                    'value' => true,
+                ),
+                'main' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'map' => array(
+                    'name' => true,
+                ),
+                'mark' => array(),
+                'menu' => array(
+                    'type' => true,
+                ),
+                'nav' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'object' => array(
+                    'data' => array(
+                        'required' => true,
+                        'value_callback' => '_wp_kses_allow_pdf_objects',
+                    ),
+                    'type' => array(
+                        'required' => true,
+                        'values' => array('application/pdf'),
+                    ),
+                ),
+                'p' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'pre' => array(
+                    'width' => true,
+                ),
+                'q' => array(
+                    'cite' => true,
+                ),
+                's' => array(),
+                'samp' => array(),
+                'span' => array(
+                    'dir' => true,
+                    'align' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'section' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'small' => array(),
+                'strike' => array(),
+                'strong' => array(),
+                'sub' => array(),
+                'summary' => array(
+                    'align' => true,
+                    'dir' => true,
+                    'lang' => true,
+                    'xml:lang' => true,
+                ),
+                'sup' => array(),
+                'table' => array(
+                    'align' => true,
+                    'bgcolor' => true,
+                    'border' => true,
+                    'cellpadding' => true,
+                    'cellspacing' => true,
+                    'dir' => true,
+                    'rules' => true,
+                    'summary' => true,
+                    'width' => true,
+                ),
+                'tbody' => array(
+                    'align' => true,
+                    'char' => true,
+                    'charoff' => true,
+                    'valign' => true,
+                ),
+                'td' => array(
+                    'abbr' => true,
+                    'align' => true,
+                    'axis' => true,
+                    'bgcolor' => true,
+                    'char' => true,
+                    'charoff' => true,
+                    'colspan' => true,
+                    'dir' => true,
+                    'headers' => true,
+                    'height' => true,
+                    'nowrap' => true,
+                    'rowspan' => true,
+                    'scope' => true,
+                    'valign' => true,
+                    'width' => true,
+                ),
+                'textarea' => array(
+                    'cols' => true,
+                    'rows' => true,
+                    'disabled' => true,
+                    'name' => true,
+                    'readonly' => true,
+                ),
+                'tfoot' => array(
+                    'align' => true,
+                    'char' => true,
+                    'charoff' => true,
+                    'valign' => true,
+                ),
+                'th' => array(
+                    'abbr' => true,
+                    'align' => true,
+                    'axis' => true,
+                    'bgcolor' => true,
+                    'char' => true,
+                    'charoff' => true,
+                    'colspan' => true,
+                    'headers' => true,
+                    'height' => true,
+                    'nowrap' => true,
+                    'rowspan' => true,
+                    'scope' => true,
+                    'valign' => true,
+                    'width' => true,
+                ),
+                'thead' => array(
+                    'align' => true,
+                    'char' => true,
+                    'charoff' => true,
+                    'valign' => true,
+                ),
+                'title' => array(),
+                'tr' => array(
+                    'align' => true,
+                    'bgcolor' => true,
+                    'char' => true,
+                    'charoff' => true,
+                    'valign' => true,
+                ),
+                'track' => array(
+                    'default' => true,
+                    'kind' => true,
+                    'label' => true,
+                    'src' => true,
+                    'srclang' => true,
+                ),
+                'tt' => array(),
+                'u' => array(),
+                'ul' => array(
+                    'type' => true,
+                ),
+                'ol' => array(
+                    'start' => true,
+                    'type' => true,
+                    'reversed' => true,
+                ),
+                'var' => array(),
+                'video' => array(
+                    'autoplay' => true,
+                    'controls' => true,
+                    'height' => true,
+                    'loop' => true,
+                    'muted' => true,
+                    'playsinline' => true,
+                    'poster' => true,
+                    'preload' => true,
+                    'src' => true,
+                    'width' => true,
+                ),
+            ));
+            echo "</div></div>";
+        }
         ?>
 
 
@@ -877,7 +877,7 @@ do_action('smart_forms_load_designer_scripts');
                     </td>
                 </tr>
                 <tr >
-                    <td style="text-align: right"><span class="smartDonationsConfigurationInfo"><?php echo __("Donation/Payment description") ?></span></td><td class="smartDonationsConfigurationInfo"> <input type="text" id="smartDonationsDescription"/><span class="description smartDonationsConfigurationInfoDesc" style="margin-bottom:5px;display: inline;"> <?php echo __("*This description is going to be shown in the Paypal transaction page "); ?><a href="<?php echo SMART_FORMS_DIR_URL?>images/paypal_transaction_page.png" target="_blank"><?php echo __("(Screenshot)")?></a></span></td>
+                    <td style="text-align: right"><span class="smartDonationsConfigurationInfo"><?php echo __("Donation/Payment description") ?></span></td><td class="smartDonationsConfigurationInfo"> <input type="text" id="smartDonationsDescription"/><span class="description smartDonationsConfigurationInfoDesc" style="margin-bottom:5px;display: inline;"> <?php echo __("*This description is going to be shown in the Paypal transaction page "); ?><a href="<?php echo SMART_FORMS_DIR_URL ?>images/paypal_transaction_page.png" target="_blank"><?php echo __("(Screenshot)") ?></a></span></td>
                 </tr>
 
 
@@ -888,7 +888,7 @@ do_action('smart_forms_load_designer_scripts');
 
 
                 <tr >
-               <?php /*     <td style="text-align: right"><span class="smartDonationsConfigurationInfo">Send thank you email</span></td><td class="smartDonationsConfigurationInfo"> <input  type="checkbox" id="redNaoSendThankYouEmail" ><span  class="description smartDonationsConfigurationInfoDesc" style="margin-bottom:5px;display: inline;"> <?php echo __("*If you check this box the thank you email is going to be send to the donators "); ?> <a href="<?php echo SMART_FORMS_DIR_URL?>images/campaign.png" target="_blank"><?php echo __("(Screenshot)")?></a></span></td> */?>
+               <?php /*     <td style="text-align: right"><span class="smartDonationsConfigurationInfo">Send thank you email</span></td><td class="smartDonationsConfigurationInfo"> <input  type="checkbox" id="redNaoSendThankYouEmail" ><span  class="description smartDonationsConfigurationInfoDesc" style="margin-bottom:5px;display: inline;"> <?php echo __("*If you check this box the thank you email is going to be send to the donators "); ?> <a href="<?php echo SMART_FORMS_DIR_URL?>images/campaign.png" target="_blank"><?php echo __("(Screenshot)")?></a></span></td> */ ?>
                 </tr>
                 <tr>
                     <td>
@@ -1031,7 +1031,7 @@ do_action('smart_forms_load_designer_scripts');
                                         <div style="display: inline-block" class="sfLabelLayoutContainer">
                                             <span><?php echo __("Labels Layout"); ?></span>
 
-                                            <span class="sfLabelLayout glyphicon glyphicon-question-sign"style="margin-left: 2px;cursor:hand;cursor:pointer;" data-toggle="tooltip" data-placement="right" title="" class="glyphicon glyphicon-question-sign" data-original-title="<?php echo __("<strong>Left</strong>:Always in the left of the field")."<img src='".SMART_FORMS_DIR_URL."images/labelsLeft.png'/>"."\r\n".__("<strong>Top</strong>: Labels always in the top of the field.")."<img src='".SMART_FORMS_DIR_URL."images/labelsTop.png'/>\r\n".__("<strong>Auto</strong>:If enough space put labels on the left, otherwise on the top.")."<img src='".SMART_FORMS_DIR_URL?>images/labelsAuto.gif'/>"  ?></span>
+                                            <span class="sfLabelLayout glyphicon glyphicon-question-sign"style="margin-left: 2px;cursor:hand;cursor:pointer;" data-toggle="tooltip" data-placement="right" title="" class="glyphicon glyphicon-question-sign" data-original-title="<?php echo __("<strong>Left</strong>:Always in the left of the field") . "<img src='" . SMART_FORMS_DIR_URL . "images/labelsLeft.png'/>" . "\r\n" . __("<strong>Top</strong>: Labels always in the top of the field.") . "<img src='" . SMART_FORMS_DIR_URL . "images/labelsTop.png'/>\r\n" . __("<strong>Auto</strong>:If enough space put labels on the left, otherwise on the top.") . "<img src='" . SMART_FORMS_DIR_URL ?>images/labelsAuto.gif'/>"  ?></span>
                                         </div>
                                     </div>
                                 </td>
@@ -1102,7 +1102,7 @@ do_action('smart_forms_load_designer_scripts');
                                         <span>Next</span><input type="text" class="form-control" id="nextText"/>
                                     </div>
                                     <div style="width:100px;float:left;display: none;" class="msfText" >
-                                        <span><?php echo __("Complete")?></span><input type="text" class="form-control"  id="completeText"/>
+                                        <span><?php echo __("Complete") ?></span><input type="text" class="form-control"  id="completeText"/>
                                     </div>
 
                                 </td>
@@ -1122,7 +1122,7 @@ do_action('smart_forms_load_designer_scripts');
         <!--
 
                 <div class="treeDiv" id="smartDonationsAdvanced">
-                    <img class="treeButton" src="<?php echo plugin_dir_url(__FILE__)?>images/arrow_right.png" alt=""/>
+                    <img class="treeButton" src="<?php echo plugin_dir_url(__FILE__) ?>images/arrow_right.png" alt=""/>
                     <h2 class="treeTitle">Advanced Options</h2>
                 </div>
                 <div  id="smartDonationsAdvancedDetail">
@@ -1199,7 +1199,7 @@ do_action('smart_forms_load_designer_scripts');
 
 
                                                     <li><a id="atabbuttons"
-                                                           class="formtab" <?php echo(has_smart_donations_license_and_is_active() ? "" : 'style="display: none"'); ?> ><?php echo __("Paypal") ?></a>
+                                                           class="formtab" <?php echo (has_smart_donations_license_and_is_active() ? "" : 'style="display: none"'); ?> ><?php echo __("Paypal") ?></a>
                                                     </li>
                                                     <li><a id="atabpro" class="formtab"><?php echo __("Pro") ?></a></li>
                                                 </ul>
@@ -1509,7 +1509,7 @@ do_action('smart_forms_load_designer_scripts');
             <div class="modal-dialog" style=";width:90%;max-width: 1200px; height: 85%;overflow-y:auto;">
                 <div class="modal-content" style="overflow-x: auto;max-height: 100%;display: flex;flex-direction: column;height: 100%;"  >
                     <div class="modal-header" style="height: 55px;min-height: auto;">
-                        <button type="button" onclick="event.preventDefault();window.location.href='<?php echo admin_url()?>?page=smart_forms_menu'" class="close" aria-hidden="true">×</button>
+                        <button type="button" onclick="event.preventDefault();window.location.href='<?php echo admin_url() ?>?page=smart_forms_menu'" class="close" aria-hidden="true">×</button>
                         <h4 class="modal-title"><span class="fa fa-paint-brush" style="line-height: 18px;vertical-align: middle;font-size: 13px;"></span> <span style="line-height: 18px;vertical-align: middle;">Select a template</span></h4>
                     </div>
                     <div class="modal-body" style="overflow:visible;padding:0;background-color: #fafafa;height: calc(100% - 55px)">
@@ -1520,7 +1520,7 @@ do_action('smart_forms_load_designer_scripts');
         </div>
     </div>
 <?php
-wp_enqueue_script('smart-forms-add-new',SMART_FORMS_DIR_URL.'js/dist/AddNew_bundle.js',$addNewDependencies,SMART_FORMS_FILE_VERSION);
-require_once(SMART_FORMS_DIR.'translations/smart-forms-add-new-translation.php');
+wp_enqueue_script('smart-forms-add-new', SMART_FORMS_DIR_URL . 'js/dist/AddNew_bundle.js', $addNewDependencies, SMART_FORMS_FILE_VERSION);
+require_once(SMART_FORMS_DIR . 'translations/smart-forms-add-new-translation.php');
 do_action('smart_forms_pr_add_new_extension');
 
