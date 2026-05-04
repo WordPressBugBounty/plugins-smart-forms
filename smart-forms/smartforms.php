@@ -5,7 +5,7 @@
  * Description: Place diferent form of donations on your blog...
  * Author: RedNao
  * Author URI: http://rednao.com
- * Version: 2.6.101
+ * Version: 2.6.102
  * Text Domain: Smart Forms
  * Domain Path: /languages/
  * License: GPLv3
@@ -71,6 +71,7 @@ add_action('wp_ajax_rednao_smart_forms_send_test','rednao_smart_forms_send_test'
 add_action('wp_ajax_smart_forms_skip_tutorial','smart_forms_skip_tutorial');
 add_action('wp_ajax_rednao_smartformsexport','smart_forms_export');
 add_action('wp_ajax_rednao_smart_forms_save_settings','smart_forms_save_settings');
+add_action('wp_ajax_rednao_smart_forms_update_order','rednao_smart_forms_update_order');
 add_action( 'admin_menu', 'smart_forms_remove_menu_items' );
 add_action('admin_enqueue_scripts','rednao_smart_forms_admin_header');
 add_action( 'enqueue_block_editor_assets', 'rednao_smart_forms_register_blocks' );
@@ -301,6 +302,12 @@ function rednao_smart_forms_admin_header($hook){
         add_action('admin_print_styles','smart_forms_filter_not_needed_styles');
         add_action('admin_print_scripts','smart_forms_filter_not_needed_scripts');
     }
+
+    // Enqueue sortable on the forms list page (no id = list view)
+    if($hook=='toplevel_page_smart_forms_menu'&&!isset($_GET['id']))
+    {
+        wp_enqueue_script('jquery-ui-sortable');
+    }
 }
 
 function smart_forms_filter_not_needed_styles(){
@@ -410,6 +417,7 @@ function rednao_smart_forms_plugin_was_activated()
         client_form_options MEDIUMTEXT NOT NULL,
         form_options MEDIUMTEXT NOT NULL,
         donation_email VARCHAR(200),
+        form_order int NOT NULL DEFAULT 0,
         PRIMARY KEY  (form_id)
         ) COLLATE utf8_general_ci;";
         dbDelta($sql);

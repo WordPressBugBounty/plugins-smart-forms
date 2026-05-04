@@ -20,7 +20,7 @@ define('SMART_FORMS_TABLE_NAME',$wpdb->prefix . "rednao_smart_forms_table_name")
 define('SMART_FORMS_ENTRY',$wpdb->prefix . "rednao_smart_forms_entry");
 define('SMART_FORMS_ENTRY_DETAIL',$wpdb->prefix . "rednao_smart_forms_entry_detail");
 define('SMART_FORMS_UPLOADED_FILES',$wpdb->prefix . "rednao_smart_forms_uploaded_files");
-define('SMART_FORMS_LATEST_DB_VERSION',26);
+define('SMART_FORMS_LATEST_DB_VERSION',27);
 define('SMART_FORMS_REDNAO_URL',"http://smartforms.rednao.com/");
 define('SMART_FORMS_API',SMART_FORMS_DIR.'php_classes/api/query/QueryApi.php');
 define('SECURE_SMART_FORMS_REDNAO_URL',"http://smartforms.rednao.com/");

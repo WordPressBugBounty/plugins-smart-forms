@@ -822,3 +822,43 @@ function rednao_smart_forms_get_file(){
     readfile($result->file_name);
     die();
 }
+
+function rednao_smart_forms_update_order()
+{
+    if(!isset($_POST['nonce'])||!wp_verify_nonce($_POST['nonce'],'smart_forms_update_order')||!current_user_can('manage_options'))
+    {
+        echo json_encode(array(
+            'success'=>false,
+            'errorMessage'=>'Invalid Request'
+        ));
+        die();
+    }
+
+    if(!isset($_POST['order'])||!is_array($_POST['order']))
+    {
+        echo json_encode(array(
+            'success'=>false,
+            'errorMessage'=>'Invalid order data'
+        ));
+        die();
+    }
+
+    global $wpdb;
+    $order=array_map('intval',$_POST['order']);
+
+    foreach($order as $position=>$form_id)
+    {
+        $wpdb->update(
+            SMART_FORMS_TABLE_NAME,
+            array('form_order'=>$position),
+            array('form_id'=>$form_id),
+            array('%d'),
+            array('%d')
+        );
+    }
+
+    echo json_encode(array(
+        'success'=>true
+    ));
+    die();
+}
