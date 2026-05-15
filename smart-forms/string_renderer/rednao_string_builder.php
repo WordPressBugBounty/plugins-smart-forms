@@ -8,7 +8,23 @@
 
 class rednao_string_builder {
 	public $rednao_text_input_renderer;
-    public $rednao_address_renderer;
+	public $rednao_address_renderer;
+	public $rednao_checkbox_input_renderer;
+	public $rednao_text_area_renderer;
+	public $rednao_radio_renderer;
+	public $rednao_checkbox_renderer;
+	public $rednao_image_picker_renderer;
+	public $rednao_select_renderer;
+	public $rednao_name_renderer;
+	public $rednao_phone_renderer;
+	public $rednao_donation_recurrence;
+	public $rednao_file_upload;
+	public $rednao_image_upload;
+	public $rednao_date_picker_renderer;
+	public $rednao_survey_table_renderer;
+	public $rednao_signature_renderer;
+	public $rednao_repeater_renderer;
+	public $rednao_number_renderer;
 
 
     public function __construct()
