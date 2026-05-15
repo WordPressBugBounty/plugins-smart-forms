@@ -112,6 +112,7 @@ class InsertEntryActionBase
 }
 
 class ShowMessageInsertEntryAction extends InsertEntryActionBase{
+    public $_message;  
     /**
      * @var
      */

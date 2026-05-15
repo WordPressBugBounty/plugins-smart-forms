@@ -98,7 +98,7 @@ class Smarty_Internal_SmartyTemplateCompiler extends Smarty_Internal_TemplateCom
             // start state on child templates
             $this->lex->yypushstate(Smarty_Internal_Templatelexer::CHILDBODY);
         }
-        if (function_exists('mb_internal_encoding') && ((int) ini_get('mbstring.func_overload')) & 2) {
+        if (PHP_VERSION_ID < 70200 && function_exists('mb_internal_encoding') && ((int) ini_get('mbstring.func_overload')) & 2) {
             $mbEncoding = mb_internal_encoding();
             mb_internal_encoding('ASCII');
         } else {

@@ -7,6 +7,9 @@
  */
 
 class rednao_string_builder {
+	public $rednao_text_input_renderer;
+    public $rednao_address_renderer;
+
 
     public function __construct()
     {

@@ -87,7 +87,7 @@ class Smarty_Internal_Config_File_Compiler
         $lex = new Smarty_Internal_Configfilelexer($_content, $this);
         $parser = new Smarty_Internal_Configfileparser($lex, $this);
 
-        if (function_exists('mb_internal_encoding') && ((int) ini_get('mbstring.func_overload')) & 2) {
+        if (PHP_VERSION_ID < 70200 && function_exists('mb_internal_encoding') && ((int) ini_get('mbstring.func_overload')) & 2) {
             $mbEncoding = mb_internal_encoding();
             mb_internal_encoding('ASCII');
         } else {
